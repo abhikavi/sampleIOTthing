@@ -1,0 +1,17 @@
+import time as t
+import json
+import AWSIoTPythonSDK.MQTTLib as AWSIoTPyMQTT
+
+myAWSIoTMQTTClient = AWSIoTPyMQTT.AWSIoTMQTTClient("testDevice")
+myAWSIoTMQTTClient.configureEndpoint("a3336aiih6v2mp-ats.iot.us-east-1.amazonaws.com", 8883)
+myAWSIoTMQTTClient.configureCredentials("Certificates/root.pem", "Certificates/7ae959251c-private.pem.key", "Certificates/7ae959251c-certificate.pem.crt")
+
+myAWSIoTMQTTClient.connect()
+print('Begin Publish')
+for i in range (10):
+    
+    myAWSIoTMQTTClient.publish("test/testing", i+1, 1) 
+    print("Published: '" + str(i+1) + "' to the topic: " + "'test/testing'")
+    t.sleep(0.1)
+print('Publish End')
+myAWSIoTMQTTClient.disconnect()
